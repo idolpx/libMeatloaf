@@ -123,7 +123,7 @@ std::vector<MFileSystem*> MFSOwner::availableFS {
 
 bool MFSOwner::mount(std::string name) {
     Debug_print("MFSOwner::mount fs:");
-    Debug_println(name.c_str());
+    Debug_println("%s", name.c_str());
 
     for(auto i = availableFS.begin() + 1; i < availableFS.end() ; i ++) {
         auto fs = (*i);
@@ -138,7 +138,7 @@ bool MFSOwner::mount(std::string name) {
             else
                 Debug_print("Couldn't mount fs: ");
 
-            Debug_println(name.c_str());
+            Debug_println("%s", name.c_str());
 
             return ok;
         }

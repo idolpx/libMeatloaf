@@ -17,8 +17,8 @@
 #ifndef TEST_NATIVE
 #include "../lib/hardware/fnUART.h"
 #define Serial fnUartDebug
-#else
-#define Serial.printf printf
+// #else
+// #define Serial.printf printf
 #endif
 
 /*
