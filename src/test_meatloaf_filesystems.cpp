@@ -11,22 +11,29 @@
 
 void test_meatloaf_mfile_directory(std::string path)
 {
-    DIR *dir;
-    struct dirent *ent;
-    struct stat st;
+    Debug_printv("%s", path.c_str());
+    std::unique_ptr<MFile> file = Meat::New<MFile>( path );
+    
+    printf("[List Dir]\r\n");
+    if(file->isDirectory()) {
+        printf("{ENTRY} ");
+        std::unique_ptr<MFile> entry(file->getNextFileInDir());
 
-    if ((dir = opendir ( path.c_str() )) != NULL) {
-        /* print all the files and directories within directory */
-        while ((ent = readdir (dir)) != NULL) {
-            stat(ent->d_name, &st);
-            printf ("%8lld %-30s %8hu\r\n", st.st_size, ent->d_name, st.st_mode);
+        while(entry != nullptr) {
+            if(entry->isDirectory())
+            {
+                printf("     %s <dir>\r\n", entry->name.c_str());
+            }
+            else
+            {
+                printf("%d %s <%s>\r\n", entry->size(), entry->name.c_str(), entry->extension.c_str());
+            }
+
+            entry.reset(file->getNextFileInDir());
         }
-        closedir (dir);
-    } else {
-        /* could not open directory */
-        printf ("error");
     }
 }
+
 
 void test_meatloaf_mfile_properties(std::string path)
 {

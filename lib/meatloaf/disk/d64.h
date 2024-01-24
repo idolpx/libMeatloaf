@@ -220,6 +220,7 @@ public:
     bool seekSector( std::vector<uint8_t> trackSectorOffset ) override;
 
     void seekHeader() override {
+        Debug_printv(".");
         seekSector( 
             partitions[partition].header_track, 
             partitions[partition].header_sector, 

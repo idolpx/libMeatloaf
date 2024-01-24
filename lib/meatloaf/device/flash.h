@@ -17,7 +17,7 @@
 
 class FlashFileSystem: public MFileSystem 
 {
-    bool handles(std::string path) override;
+    bool handles(std::string path);
     
 public:
     FlashFileSystem() : MFileSystem("FlashFS") {};
@@ -59,15 +59,15 @@ public:
 
     //MFile* cd(std::string newDir);
     bool isDirectory() override;
-    MStream* getSourceStream(std::ios_base::openmode mode=std::ios_base::in) override; // has to return OPENED stream
-    MStream* getDecodedStream(std::shared_ptr<MStream> src) override;
+    MStream* getSourceStream(std::ios_base::openmode mode=std::ios_base::in) override ; // has to return OPENED stream
+    MStream* getDecodedStream(std::shared_ptr<MStream> src);
 
     bool rewindDirectory() override;
     MFile* getNextFileInDir() override;
     bool mkDir() override;
     bool exists() override;
     bool remove() override;
-    bool rename(std::string dest) override;
+    bool rename(std::string dest);
 
     time_t getLastWrite() override;
     time_t getCreationTime() override;
@@ -155,7 +155,7 @@ public:
         return false;
     }
 
-    bool isOpen() override;
+    bool isOpen();
 
 protected:
     std::string localPath;

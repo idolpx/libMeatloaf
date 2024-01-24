@@ -117,9 +117,9 @@ protected:
 
     bool show_hidden = false;
 
-    size_t media_header_size = 0x00;
-    size_t entry_index = 0;  // Currently selected directory entry
-    size_t entry_count = -1; // Directory list entry count (-1 unknown)
+    uint8_t media_header_size = 0x00;
+    uint16_t entry_index = 0;  // Currently selected directory entry
+    uint16_t entry_count = -1; // Directory list entry count (-1 unknown)
 
     enum open_modes { OPEN_READ, OPEN_WRITE, OPEN_APPEND, OPEN_MODIFY };
     std::string file_type_label[12] = { "DEL", "SEQ", "PRG", "USR", "REL", "CBM", "DIR", "SUS", "NAT", "CMD", "CFS", "???" };
@@ -128,6 +128,7 @@ protected:
     virtual bool seekNextImageEntry() = 0;
     void resetEntryCounter() {
         entry_index = 0;
+        Debug_printv("entry_index[%d]", entry_index);
     }
 
     // Disks
@@ -180,10 +181,12 @@ public:
     template<class T> static T* obtain(std::string url) {
         // obviously you have to supply STREAMFILE.url to this function!
         if(repo.find(url)!=repo.end()) {
+            Debug_printv("STREAM FOUND!");
             return (T*)repo.at(url);
         }
 
         // create and add stream to broker if not found
+        Debug_printv("STREAM NOT FOUND!");
         auto newFile = MFSOwner::File(url);
         T* newStream = (T*)newFile->getSourceStream();
 

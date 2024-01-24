@@ -381,7 +381,7 @@ bool D64File::isDirectory() {
 
 bool D64File::rewindDirectory() {
     dirIsOpen = true;
-    //Debug_printv("streamFile->url[%s]", streamFile->url.c_str());
+    Debug_printv("streamFile->url[%s]", streamFile->url.c_str());
     auto image = ImageBroker::obtain<D64IStream>(streamFile->url);
     if ( image == nullptr )
         Debug_printv("image pointer is null");
@@ -389,7 +389,9 @@ bool D64File::rewindDirectory() {
     image->resetEntryCounter();
 
     // Read Header
+    Debug_printv("before read header");
     image->seekHeader();
+    Debug_printv("after read header");
 
     // Set Media Info Fields
     media_header = mstr::format("%.16s", image->header.disk_name);
